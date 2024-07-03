@@ -1,3 +1,4 @@
+--c
     -- \\ Dont Obfuscate   getgenv().PremiumKey // --
 
 
@@ -790,7 +791,7 @@ AutoLoadToggle:OnChanged(function()
         hasLoad = true
   task.wait(.1)
 queue_on_teleport([[
-loadstring(game:HttpGet("https://raw.githubusercontent.com/YOies/Test/main/AA"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/YOies/Test2/main/Test"))()
 ]])
 
 Fluent:Notify({
@@ -1259,7 +1260,7 @@ local lp,po,ts = game:GetService('Players').LocalPlayer,game.CoreGui.RobloxPromp
 po.ChildAdded:connect(function(a)
     if a.Name == 'ErrorPrompt' then
         repeat
-            ts:Teleport(game.PlaceId)
+            ts:Teleport(6068961298)
             wait(2)
         until false
     end
