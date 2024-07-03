@@ -75,6 +75,7 @@ local function SJSY_fake_script() -- TextButton.LocalScript
 	
 	button.MouseButton1Click:Connect(function()
 		game:GetService("VirtualInputManager"):SendKeyEvent(true, "LeftControl", false, game.Players.LocalPlayer)
+        game:GetService("VirtualInputManager"):SendKeyEvent(false, "LeftControl", false, game.Players.LocalPlayer)
 	end)
 	
 end
@@ -1239,6 +1240,7 @@ HideUIToggle:OnChanged(function()
     for _, v in pairs(game.CoreGui:GetChildren()) do 
         if v:IsA("ScreenGui") and v.Name == "ScreenGui" and v:FindFirstChild("Frame") and v.Enabled == true then 
             game:GetService("VirtualInputManager"):SendKeyEvent(true, "LeftControl", false, game.Players.LocalPlayer)
+            game:GetService("VirtualInputManager"):SendKeyEvent(false, "LeftControl", false, game.Players.LocalPlayer)
         end 
     end 
 end 
