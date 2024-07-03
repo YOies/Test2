@@ -1,0 +1,1317 @@
+    -- \\ Dont Obfuscate   getgenv().PremiumKey // --
+
+
+    -- \\ Obfuscate Everything Under This // -- 
+print("L-HUB v3 executed! | Made by .L. and DatNguyen")
+repeat wait() until game:IsLoaded()
+repeat wait() until game.Players.LocalPlayer.PlayerGui:FindFirstChild("HUD")
+task.wait(5)
+local vu = game:GetService("VirtualUser")
+game:GetService("Players").LocalPlayer.Idled:connect(function()
+   vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+   wait(3)
+   vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+end)
+
+local thumbsDownEmoji = utf8.char(0x1F44E)
+local noEntryEmoji = utf8.char(0x1F6AB)
+local farmerEmoji = utf8.char(0x1F468, 0x200D, 0x1F33D)
+local repeatEmoji = utf8.char(0x1F501)
+local signalStrengthEmoji = utf8.char(0x1F4F6)
+local doorEmoji = utf8.char(0x1F6AA)
+local repeatSingleEmoji = utf8.char(0x1F502)
+local clockwiseVerticalArrowsEmoji = utf8.char(0x1F503) 
+local timerClockEmoji = utf8.char(0x23F2)
+local axeEmoji = utf8.char(0x1FA93)
+local crossedSwordsEmoji = utf8.char(0x2694)
+local rocketEmoji = utf8.char(0x1F680)
+local computerMouseEmoji = utf8.char(0x1F5B1)
+local moneyBagEmoji = utf8.char(0x1F4B0)
+
+local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
+local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
+local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
+local gameName = game:GetService("MarketplaceService"):GetProductInfo(6068961298).Name
+
+local userInputService = game:GetService("UserInputService")
+
+-- Gui to Lua
+-- Version: 3.2
+
+-- Instances:
+
+local ScreenGui = Instance.new("ScreenGui")
+local Frame = Instance.new("Frame")
+local TextButton = Instance.new("TextButton")
+
+--Properties:
+
+ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+
+Frame.Parent = ScreenGui
+Frame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+Frame.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Frame.BorderSizePixel = 0
+Frame.Position = UDim2.new(0.274711221, 0, 0.26566416, 0)
+Frame.Size = UDim2.new(0, 66, 0, 50)
+
+TextButton.Parent = Frame
+TextButton.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+TextButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
+TextButton.BorderSizePixel = 0
+TextButton.Position = UDim2.new(-0.0131674102, 0, -0.0143359378, 0)
+TextButton.Size = UDim2.new(0, 66, 0, 50)
+TextButton.Font = Enum.Font.SourceSans
+TextButton.Text = "Open/Close"
+TextButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+TextButton.TextSize = 14.000
+
+-- Scripts:
+
+local function SJSY_fake_script() -- TextButton.LocalScript 
+	local script = Instance.new('LocalScript', TextButton)
+
+	local button = script.Parent
+	
+	button.MouseButton1Click:Connect(function()
+		game:GetService("VirtualInputManager"):SendKeyEvent(true, "LeftControl", false, game.Players.LocalPlayer)
+	end)
+	
+end
+coroutine.wrap(SJSY_fake_script)()
+
+getgenv().Status = ""
+getgenv().NumberLeave = ""
+getgenv().WebhookUrlLink = ""
+getgenv().ActionAfterFinishStory = ""
+getgenv().MultiChallenges = {}
+getgenv().MultiRewardChallenges = {}
+getgenv().ActualNameToSnipe = {}
+getgenv().WantedNotify = {} -- Everything or Multiple items | for webhook
+     
+
+
+if game.PlaceId == 6068961298 then 
+getgenv().Status = "Impact City"
+else
+getgenv().Status = "Impact Battles"
+end 
+
+local Window = Fluent:CreateWindow({
+    Title = gameName,
+    SubTitle = "by DatNguyen",
+    TabWidth = 160,
+    Size = UDim2.fromOffset(580, 460),
+    Acrylic = false, -- The blur may be detectable, setting this to false disables blur entirely
+    Theme = "Dark",
+    MinimizeKey = Enum.KeyCode.LeftControl -- Used when theres no MinimizeKeybind
+})
+
+--Fluent provides Lucide Icons https://lucide.dev/icons/ for the tabs, icons are optional
+local Tabs = {
+    Timer = Window:AddTab({ Title = "Server Status", Icon = "server" }),
+    Main = Window:AddTab({ Title = "Stories", Icon = "focus" }),
+    Challenge = Window:AddTab({ Title = "Challenges", Icon = "swords" }),
+    Summon = Window:AddTab({ Title = "Summons", Icon = "egg" }),
+    Webhook = Window:AddTab({ Title = "Webhooks", Icon = "bell" }),
+    Miscs = Window:AddTab({ Title = "Misc", Icon = "terminal" }),
+    Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
+}
+
+local Options = Fluent.Options
+
+do
+
+    local args = {
+        [1] = "ManageShuttle",
+        [2] = {
+            ["LaunchShuttle"] = true,
+            ["WorldType"] = "Shinobi Forest",
+            ["Level"] = "Infinite"
+        }
+    }
+    
+    game:GetService("Players").LocalPlayer:WaitForChild("Input"):FireServer(unpack(args))
+
+    
+    Fluent:Notify({
+        Title = "Server Status",
+        Content = "Game ID | Total Players | Place",
+        SubContent = game.PlaceId .. " | " .. #game:GetService("Players"):GetPlayers() .. " | " .. getgenv().Status , -- Optional
+        Duration = nil -- Set to nil to make the notification not disappear
+    })
+
+    local StoryName = Tabs.Main:AddDropdown("StoryNamed", {
+        Title = "Select Story:",
+        Values = {"Shinobi Forest","Namak Invasion","Sand Island","Spirit Society"},
+        Multi = false,
+        Default = "None",
+    })
+
+    local StoryLevel = Tabs.Main:AddDropdown("LevelStory", {
+        Title = "Select Level:",
+        Values = {"1","2","3","4","5","6","Infinite"},
+        Multi = false,
+        Default = "1",
+    })
+
+    local StoryDifficulty = Tabs.Main:AddDropdown("DifficultyStory", {
+        Title = "Select Difficulty:",
+        Values = {"Easy","Hard"},
+        Multi = false,
+        Default = "Easy",
+    })
+
+    local ActionDP = Tabs.Main:AddDropdown("ActionAfterDone", {
+        Title = "Action After Completion:",
+        Values = {"Replay", "Return", "Next"},
+        Multi = false,
+        Default = "None",
+    })
+
+
+    local FriendOnlyToggle = Tabs.Main:AddToggle("FriendOnly", {Title = "Friend Only", Default = false })
+    local AutoJoinToggle = Tabs.Main:AddToggle("AutoJoin", {Title = "Auto Join Selected Story", Default = false })
+    local AutoDoActionToggle = Tabs.Main:AddToggle("AutoDoAction", {Title = "Auto Do Action After Completion", Default = false })
+    Tabs.Main:AddParagraph({
+        Title = "Story & Infinite Settings",
+        Content = "Settings Available In Impact Battles | Current Place: " .. getgenv().Status .. "\nIf your current wave is higher than the entered wave, it will auto leave."
+    })
+
+    local Input = Tabs.Main:AddInput("WaveNumber", {
+        Title = "Enter Wave To Leave: [WAVE:X]",
+        Default = "20",
+        Placeholder = "",
+        Numeric = true, -- Only allows numbers
+        Finished = true, -- Only calls callback when you press enter
+        Callback = function(Value)
+          getgenv().NumberLeave = Value
+        end
+    })
+
+    local Input = Tabs.Webhook:AddInput("WebhookUrls", {
+        Title = "Webhook Url:",
+        Default = "",
+        Placeholder = "",
+        Numeric = false, -- Only allows numbers
+        Finished = true, -- Only calls callback when you press enter
+        Callback = function(Value)
+         getgenv().WebhookUrlLink = Value
+        end
+    })
+
+    local AutoLeaveToggle = Tabs.Main:AddToggle("AutoLeave", {Title = "Auto Leave At X Waves", Default = false })
+
+    
+    local itemstonotify = {"Everything","Orange Candy", "Red Candy", "Pink Candy", "Blue Candy","Yellow Candy","Green Candy","Super Lucky Potion","Normal Lucky Potion","Mega Lucky Potion","Coins","Gems","Costume Token","Spirit Orb","Soul Ticket","Match Speed Token"} 
+      
+    local SelectItemWebhookDP = Tabs.Webhook:AddDropdown("SelectItemWebhook", {
+        Title = "Select Multiple Items To Notify:",
+        Description = "You can select Everything if you want to notify anything.",
+        Values = itemstonotify,
+        Multi = true,
+        Default = {"None"},
+    })
+
+    local WebhookToggle = Tabs.Webhook:AddToggle("WebhookStory", {Title = "Auto Notify Rewards To Webhook", Default = false })
+    if game.PlaceId == 6068961298 then
+    local Map1 = game.Workspace.Mechanisms.Shuttles["Challenge 1"].Screen.Surface
+local Map2 = game.Workspace.Mechanisms.Shuttles["Challenge 3"].Screen.Surface
+local Map3 = game.Workspace.Mechanisms.Shuttles["Challenge 6"].Screen.Surface
+
+local Difficulty1 = game.Players.LocalPlayer.PlayerGui:WaitForChild("ChallengeScreenGui1").LevelInfo.Difficulty.Text
+local Reward1 = game.Players.LocalPlayer.PlayerGui:WaitForChild("ChallengeScreenGui1").LevelInfo.Reward.Text
+local Difficulty2 = game.Players.LocalPlayer.PlayerGui:WaitForChild("ChallengeScreenGui3").LevelInfo.Difficulty.Text
+local Reward2 = game.Players.LocalPlayer.PlayerGui:WaitForChild("ChallengeScreenGui3").LevelInfo.Reward.Text
+local Difficulty3 = game.Players.LocalPlayer.PlayerGui:WaitForChild("ChallengeScreenGui6").LevelInfo.Difficulty.Text
+local Reward3 = game.Players.LocalPlayer.PlayerGui:WaitForChild("ChallengeScreenGui6").LevelInfo.Reward.Text
+
+
+Tabs.Challenge:AddParagraph({
+    Title = "Impact City Challenges: [ No Refresh ]",
+    Content = Map1.MapName.Text .. " - " .. Difficulty1 .. " - " .. Reward1
+    .. "\n" .. Map2.MapName.Text .. " - "  .. Difficulty2.. " - "  .. Reward2
+    .. "\n" .. Map3.MapName.Text .. " - " .. Difficulty3 .. " - ".. Reward3
+})
+else
+    Tabs.Challenge:AddParagraph({
+        Title = "Impact City Challenges: [ No Refresh ]",
+        Content = "Currently Not In Impact City."
+    })
+end
+
+local AutoChallengeToggle = Tabs.Challenge:AddToggle("ChallengeToggle", {Title = "Auto Complete All Challenges", Default = false })
+
+local MultiChallengeDP = Tabs.Challenge:AddDropdown("SnipeChallenge", {
+    Title = "Select Multiple Challenge Types:",
+    Description = "Use this to snipe challenges.\nYou can select multiple challenge types.",
+    Values = {"Tanky", "Blitz", "Last Stand", "Shield"},    
+    Multi = true,
+    Default = {"None"},
+})
+
+local MultiChallengeToggle = Tabs.Challenge:AddToggle("MultiChallengeAutoSave", {Title = "Auto Snipe Challenge Types", Default = false })
+
+local RewardMultiChallengeDP = Tabs.Challenge:AddDropdown("SnipeRewardChallenge", {
+    Title = "Select Multiple Reward Challenges:",
+    Description = "Use this to snipe multiple reward challenges.\nYou can select multiple reward challenges.",
+    Values = {"Orange Candy", "Red Candy", "Pink Candy", "Blue Candy","Yellow Candy","Green Candy","Super Lucky Potion","Normal Lucky Potion","Mega Lucky Potion","Coins","Gems","Costume Token","Spirit Orb","Soul Ticket","Match Speed Token"},    
+    Multi = true,
+    Default = {"None"},
+})
+
+local MultiRewardChallengeToggle = Tabs.Challenge:AddToggle("MultiRewardChallengeAutoSave", {Title = "Auto Snipe Multiple Reward Challenges", Default = false })
+
+if game.PlaceId == 6068961298 then
+if game.Workspace.Mechanisms:FindFirstChild("TimeShop") then 
+    pcall(function()
+    getgenv().Items = {} 
+    for _,v in pairs(game.Workspace.Mechanisms.TimeShop.ItemsToBuy:GetChildren()) do 
+          if v:IsA("StringValue") then 
+               table.insert(Items,v.Name)
+          end 
+          end 
+          Tabs.Timer:AddParagraph({
+            Title = "Time Shop: [No Refresh]",
+            Content = table.concat(Items, "\n")
+        })
+    end)
+else 
+    Tabs.Timer:AddParagraph({
+        Title = "Time Shop: [No Refresh]",
+        Content = "Time Shop Not Available at the Moment"
+    })
+end 
+else
+    Tabs.Timer:AddParagraph({
+        Title = "Time Shop: [No Refresh]",
+        Content = "Currently Not In Impact City."
+    })
+end
+
+getgenv().itemstosnipe = {"Orange Candy", "Red Candy", "Pink Candy", "Blue Candy","Yellow Candy","Green Candy","Super Lucky Potion","Normal Lucky Potion","Mega Lucky Potion","Coins","Gems","Costume Token","Spirit Orb","Soul Ticket","Match Speed Token"}
+for _,v in pairs(game:GetService("ReplicatedStorage").Assets.Cosmetics:GetChildren()) do 
+    if v:IsA("MeshPart") then 
+       table.insert(itemstosnipe,v.Name)
+    end 
+   end
+
+local TimeShopSniperDP = Tabs.Timer:AddDropdown("SnipeItem", {
+    Title = "Select Multiple Items To Snipe:",
+    Description = "You can select multiple items to snipe when the time shop arrives.",
+    Values = itemstosnipe,
+    Multi = true,
+    Default = {"None"},
+})
+
+local TimeShopSniperToggle = Tabs.Timer:AddToggle("SniperTimeShop", {Title = "Auto Snipe Items in the Time Shop", Default = false })
+
+Tabs.Summon:AddParagraph({
+    Title = "Summons Settings",
+    Content = "Settings Available In Impact City"
+})
+
+if game.PlaceId == 6068961298 then
+    getgenv().unitsbanner = {}
+
+    local rarities = {Rare = 1, Epic = 2, Legendary = 3, Mythic = 4}
+    local units = {}
+    
+    for _, v in pairs(game.Players.LocalPlayer.PlayerGui.Summon.Banner.Regular:GetChildren()) do 
+        if v:IsA("ViewportFrame") then 
+            table.insert(units, {rarity = v.Rarity.Text, name = v.CharName.Text})
+        end 
+    end
+    
+    table.sort(units, function(a, b)
+        return rarities[a.rarity] < rarities[b.rarity]
+    end)
+    
+    for _, unit in ipairs(units) do
+        table.insert(unitsbanner, unit.rarity .. " => " .. unit.name)
+    end
+    
+
+Tabs.Summon:AddParagraph({
+    Title = "Current Regular Banner: [ No Refresh ]",
+    Content = table.concat(unitsbanner,"\n")
+})
+else
+    Tabs.Summon:AddParagraph({
+        Title = "Current Regular Banner: [ No Refresh ]",
+        Content = "Currently Not In Impact City."
+    })
+end
+
+
+local Summon1Toggle = Tabs.Summon:AddToggle("Auto1xCurrentBanner", {Title = "Auto Summon 1x ", Default = false })
+local Summon10Toggle = Tabs.Summon:AddToggle("Auto10xCurrentBanner", {Title = "Auto Summon 10x ", Default = false })
+
+Tabs.Summon:AddParagraph({
+    Title = "Auto Snipe Units",
+    Content = "How to Use the Auto-Snipe Feature: \nSelect unit you want to snipe \nTurn on either 1x summon or 10x summon. \nIf you obtain the selected unit, the auto-summon will automatically disable and You will receive a notification when the unit is acquired."
+})
+
+
+local WantUnitSelectDP = Tabs.Summon:AddDropdown("UnitWantedDP", {
+    Title = "Select Unit To Snipe:",
+    Values = {"Sasook", "Cherry", "Narooto", 
+    "Loofy", "Kuririn", "Tonji", "Yumcho", "Zoru",
+     "Ichee", "Vegete", "Goko (Saiyan)", "Kid Guhen", "Flute", "Sanjoo","Kenpaki","Zozen","Ging","Urahima","Freezo","Spade","Ruke","Kakashee",
+     "Heron","Hoku","Nani","Zabohza","Goko (Namak)","Teen Guhen","Ceru","Croc","Eneru","Narooto (Timeskip)","Jonin Minatu","Sonade","Pein","Aizo","Byakuyo","Jin Woo"},
+    Multi = false,
+    Default = "None",
+})
+
+local AutoSnipeToggle = Tabs.Summon:AddToggle("AutoSnipe", {Title = "Auto Snipe Selected Unit", Default = false })
+
+local HideToggle = Tabs.Miscs:AddToggle("AutoHide", {Title = "Protect Mode [ Client Side ]", Default = false })
+local AutoLoadToggle = Tabs.Miscs:AddToggle("AutoLoad", {Title = "Auto Execute Upon Server Hop", Default = false })
+local ClaimQuestToggle = Tabs.Miscs:AddToggle("AutoClaimQuest", {Title = "Auto Claim All Missions / Quests", Default = false })
+local HideUIToggle = Tabs.Miscs:AddToggle("AutoHideUI", {Title = "Auto Hide UI", Default = false })
+local AutoReconnectToggle = Tabs.Miscs:AddToggle("AutoReconnect", {Title = "Auto Reconnect If Disconnect / Crash", Default = false })
+local FpsBoostToggle = Tabs.Miscs:AddToggle("FpsBoost", {Title = "Auto Fps Boost", Default = false })
+local Set3DRenderToggle = Tabs.Miscs:AddToggle("Set3DRender", {Title = "Auto White Screen", Default = false })
+local DailyToggle = Tabs.Miscs:AddToggle("AutoDaily", {Title = "Auto Claim Daily Rewards", Default = false })
+Tabs.Miscs:AddButton({
+    Title = "Copy Discord Server Invite [Press Ctrl+V After Click]",
+    Description = "Join L-HUB today!",
+    Callback = function()
+        Window:Dialog({
+            Title = "Hey There!",
+            Content = "If you want to join our server, make sure to suggest more features!",
+            Buttons = {
+                {
+                    Title = "Sure,Lemme join!",
+                    Callback = function()
+                      setclipboard("https://discord.gg/Ags7fmSFpC")
+                    end
+                },
+                {
+                    Title = "Ofc bro, lemme join!",
+                    Callback = function()
+                        setclipboard("https://discord.gg/Ags7fmSFpC")
+                    end
+                }
+            }
+        })
+    end
+})
+
+
+
+
+
+StoryName:OnChanged(function(Value)
+    getgenv().WorldName = Value
+end)
+
+StoryLevel:OnChanged(function(Value)
+    getgenv().LevelName = Value
+end)
+
+StoryDifficulty:OnChanged(function(Value)
+    getgenv().StoryDifficultys = Value
+end)
+ActionDP:OnChanged(function(Value)
+    getgenv().ActionAfterFinishStory = Value
+end)
+
+WantUnitSelectDP:OnChanged(function(Value)
+    getgenv().WantedUnit = Value
+end)
+
+MultiChallengeDP:OnChanged(function(Value)
+    getgenv().MultiChallenges = {}
+    for i, v in pairs(Value) do
+        table.insert(getgenv().MultiChallenges, i)  -- Insert the key (i) into the table
+    end
+    print("Multi-Challenges changed:", table.concat(getgenv().MultiChallenges, ","))
+    
+end)
+
+RewardMultiChallengeDP:OnChanged(function(Value)
+    getgenv().MultiRewardChallenges = {}
+    for i, v in pairs(Value) do
+        table.insert(getgenv().MultiRewardChallenges, i)  -- Insert the key (i) into the table
+    end
+    print("Multi-Reward-Challenges changed:", table.concat(getgenv().MultiRewardChallenges, ","))
+    
+end)
+
+TimeShopSniperDP:OnChanged(function(Value)
+    getgenv().ActualNameToSnipe = {}
+    for i, v in pairs(Value) do
+        table.insert(getgenv().ActualNameToSnipe, i)  -- Insert the key (i) into the table
+    end
+    print("TimeShop changed:", table.concat(getgenv().ActualNameToSnipe, ","))
+    
+end)
+
+SelectItemWebhookDP:OnChanged(function(Value)
+    getgenv().WantedNotify = {}
+    for i, v in pairs(Value) do
+        table.insert(getgenv().WantedNotify, i)  -- Insert the key (i) into the table
+    end
+    print("ItemWebhookNotify changed:", table.concat(getgenv().WantedNotify, ","))
+    
+end)
+
+Set3DRenderToggle:OnChanged(function()
+if Options.Set3DRender.Value == true then 
+game:GetService("RunService"):Set3dRenderingEnabled(false)
+else
+    game:GetService("RunService"):Set3dRenderingEnabled(true)
+end 
+end) 
+
+TimeShopSniperToggle:OnChanged(function()
+    while Options.SniperTimeShop.Value == true do  
+        task.wait(1)
+         pcall(function()
+for _,actualname in pairs(getgenv().ActualNameToSnipe ) do
+    for _,v in pairs(game.Workspace.Mechanisms.TimeShop.ItemsToBuy:GetChildren()) do 
+          if v:IsA("StringValue") and v.Name == actualname then 
+              local args = {
+                   [1] = "RequestPurchase",
+                   [2] = {
+                       ["Item"] = v.Name,
+                       ["TimeShop"] = true
+                   }
+               }
+               
+               game:GetService("Players").LocalPlayer:WaitForChild("Input"):FireServer(unpack(args))
+          end 
+          end 
+         end 
+
+              
+ if game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("OptionPrompt") then 
+
+    if userInputService.KeyboardEnabled and  userInputService.MouseEnabled then 
+        wait(1)
+        local imageButton = game:GetService("Players").LocalPlayer.PlayerGui.OptionPrompt.Prompt.Yes
+        imageButton.Size = UDim2.new(999999999, 999999999, 999999999, 999999999)
+        imageButton.BackgroundTransparency  = 0
+        wait(1)
+             mouse1click()
+        
+    elseif userInputService.TouchEnabled then 
+        local Signals = {"Activated", "MouseButton1Down", "MouseButton2Down", "MouseButton1Click", "MouseButton2Click"}
+
+        for _,v in pairs(game:GetService("Players").LocalPlayer.PlayerGui.OptionPrompt.Prompt:GetChildren()) do
+            if v:IsA("ImageButton") and v.Name == "Yes" then
+                for i,Signal in pairs(Signals) do
+                    firesignal(v[Signal])
+                end
+            end
+        end  
+    end 
+end  
+        end)
+        if  Options.SniperTimeShop.Value == false then 
+            break 
+          end
+        end 
+    end)
+
+    local FpsRun = false
+    FpsBoostToggle:OnChanged(function()
+        if Options.FpsBoost.Value == true and not FpsRun then  
+            FpsRun = true
+            task.wait(.1)
+            pcall(function()
+    local decalsyeeted = true -- Leaving this on makes games look shitty but the fps goes up by at least 20.
+local g = game
+local w = g.Workspace
+local l = g.Lighting
+local t = w.Terrain
+t.WaterWaveSize = 0
+t.WaterWaveSpeed = 0
+t.WaterReflectance = 0
+t.WaterTransparency = 0
+l.GlobalShadows = 0
+l.FogEnd = 9e9
+l.Brightness = 0
+settings().Rendering.QualityLevel = "Level01"
+for i, v in pairs(w:GetDescendants()) do
+    if v:IsA("BasePart") and not v:IsA("MeshPart") then
+        v.Material = "Plastic"
+        v.Reflectance = 0
+    elseif (v:IsA("Decal") or v:IsA("Texture")) and decalsyeeted then
+        v.Transparency = 1
+    elseif v:IsA("ParticleEmitter") or v:IsA("Trail") then
+        v.Lifetime = NumberRange.new(0)
+    elseif v:IsA("Explosion") then
+        v.BlastPressure = 1
+        v.BlastRadius = 1
+    elseif v:IsA("Fire") or v:IsA("SpotLight") or v:IsA("Smoke") or v:IsA("Sparkles") then
+        v.Enabled = false
+    elseif v:IsA("MeshPart") and decalsyeeted then
+        v.Material = "Plastic"
+        v.Reflectance = 0
+        v.TextureID = 10385902758728957
+    elseif v:IsA("SpecialMesh") and decalsyeeted  then
+        v.TextureId=0
+    elseif v:IsA("ShirtGraphic") and decalsyeeted then
+        v.Graphic=0
+    elseif (v:IsA("Shirt") or v:IsA("Pants")) and decalsyeeted then
+        v[v.ClassName.."Template"]=0
+    end
+end
+for i = 1,#l:GetChildren() do
+    e=l:GetChildren()[i]
+    if e:IsA("BlurEffect") or e:IsA("SunRaysEffect") or e:IsA("ColorCorrectionEffect") or e:IsA("BloomEffect") or e:IsA("DepthOfFieldEffect") then
+        e.Enabled = false
+    end
+end
+w.DescendantAdded:Connect(function(v)
+    wait()--prevent errors and shit
+   if v:IsA("BasePart") and not v:IsA("MeshPart") then
+        v.Material = "Plastic"
+        v.Reflectance = 0
+    elseif v:IsA("Decal") or v:IsA("Texture") and decalsyeeted then
+        v.Transparency = 1
+    elseif v:IsA("ParticleEmitter") or v:IsA("Trail") then
+        v.Lifetime = NumberRange.new(0)
+    elseif v:IsA("Explosion") then
+        v.BlastPressure = 1
+        v.BlastRadius = 1
+    elseif v:IsA("Fire") or v:IsA("SpotLight") or v:IsA("Smoke") or v:IsA("Sparkles") then
+        v.Enabled = false
+    elseif v:IsA("MeshPart") and decalsyeeted then
+        v.Material = "Plastic"
+        v.Reflectance = 0
+        v.TextureID = 10385902758728957
+    elseif v:IsA("SpecialMesh") and decalsyeeted then
+        v.TextureId=0
+    elseif v:IsA("ShirtGraphic") and decalsyeeted then
+        v.ShirtGraphic=0
+    elseif (v:IsA("Shirt") or v:IsA("Pants")) and decalsyeeted then
+        v[v.ClassName.."Template"]=0
+    end
+end)
+end)
+end
+end)
+
+
+MultiChallengeToggle:OnChanged(function()
+    while Options.MultiChallengeAutoSave.Value == true do  
+        task.wait(1)
+            local function fireTouchInterest(part1, part2)
+                firetouchinterest(part1, part2, 0)  -- 0 is for touch
+                wait(0.1)  
+                firetouchinterest(part1, part2, 1)  -- 1 is for untouch
+            end
+    
+            for _, lobby in pairs(game.Workspace.Mechanisms.Shuttles:GetDescendants()) do 
+                if lobby:IsA("SurfaceGui") and lobby.Name == "Surface" and lobby:FindFirstChild("LevelName") then 
+                    for _, v in pairs(game.Players.LocalPlayer.PlayerGui:GetDescendants()) do 
+                        if v:IsA("Frame") and v.Name == "LevelInfo" and v:FindFirstChild("LevelName") and v:FindFirstChild("Difficulty") then 
+                            for _, diff in pairs(getgenv().MultiChallenges) do 
+                                if lobby.LevelName.Text == v.LevelName.Text and v.Difficulty.Text == tostring(diff) then 
+                                   local dummyPart = game.Players.LocalPlayer.Character.HumanoidRootPart
+                                   local shuttle = workspace.Mechanisms.Shuttles[lobby.Parent.Parent.Name].Hologram
+                                   if game:GetService("Players").LocalPlayer.PlayerGui.HUD.WorldSelector2.Visible == false then 
+                                       fireTouchInterest(dummyPart, shuttle)
+                                   end
+                                       if game:GetService("Players").LocalPlayer.PlayerGui.HUD.WorldSelector2.Visible == true then 
+                                       local args = {
+                                   [1] = "ManageShuttle",
+                                   [2] = {
+                                       ["WorldType"] = workspace.Mechanisms.Shuttles[lobby.Parent.Parent.Name].Screen.Surface.MapName.Text,
+                                       ["LaunchShuttle"] = true
+                                   }
+                               }
+                               
+                               game:GetService("Players").LocalPlayer:WaitForChild("Input"):FireServer(unpack(args))
+                               end 
+                               
+                                end 
+                            end 
+                        end 
+                    end 
+                end 
+                
+            if  Options.MultiChallengeAutoSave.Value == false then 
+                break 
+              end 
+
+            end
+    
+        end 
+    end)
+
+    MultiRewardChallengeToggle:OnChanged(function()
+        while Options.MultiRewardChallengeAutoSave.Value == true do  
+            task.wait(1)
+                local function fireTouchInterest(part1, part2)
+                    firetouchinterest(part1, part2, 0)  -- 0 is for touch
+                    wait(0.1)  
+                    firetouchinterest(part1, part2, 1)  -- 1 is for untouch
+                end
+        
+                for _, lobby in pairs(game.Workspace.Mechanisms.Shuttles:GetDescendants()) do 
+                    if lobby:IsA("SurfaceGui") and lobby.Name == "Surface" and lobby:FindFirstChild("LevelName") then 
+                        for _, v in pairs(game.Players.LocalPlayer.PlayerGui:GetDescendants()) do 
+                            if v:IsA("Frame") and v.Name == "LevelInfo" and v:FindFirstChild("LevelName") and v:FindFirstChild("Reward") then 
+                                for _, diff in pairs(getgenv().MultiRewardChallenges) do 
+                                    if lobby.LevelName.Text == v.LevelName.Text and v.Reward.Text == "Reward: " .. tostring(diff) then 
+                                       local dummyPart = game.Players.LocalPlayer.Character.HumanoidRootPart
+                                       local shuttle = workspace.Mechanisms.Shuttles[lobby.Parent.Parent.Name].Hologram
+                                       if game:GetService("Players").LocalPlayer.PlayerGui.HUD.WorldSelector2.Visible == false then 
+                                           fireTouchInterest(dummyPart, shuttle)
+                                       end
+                                           if game:GetService("Players").LocalPlayer.PlayerGui.HUD.WorldSelector2.Visible == true then 
+                                           local args = {
+                                       [1] = "ManageShuttle",
+                                       [2] = {
+                                           ["WorldType"] = workspace.Mechanisms.Shuttles[lobby.Parent.Parent.Name].Screen.Surface.MapName.Text,
+                                           ["LaunchShuttle"] = true
+                                       }
+                                   }
+                                   
+                                   game:GetService("Players").LocalPlayer:WaitForChild("Input"):FireServer(unpack(args))
+                                   end 
+                                   
+                                    end 
+                                end 
+                            end 
+                        end 
+                    end 
+                    
+                if  Options.MultiRewardChallengeAutoSave.Value == false then 
+                    break 
+                  end 
+    
+                end
+        
+            end 
+        end)
+
+
+        ClaimQuestToggle:OnChanged(function()
+            while Options.AutoClaimQuest.Value == true do  
+                task.wait(.5)
+                 pcall(function()
+                    for _,v in pairs(game.Players.LocalPlayer.PlayerGui:FindFirstChild("Missions").Missions.Window.ScrollingFrame:GetDescendants()) do
+                        if v:IsA("Frame") and v.Name ~= "Template" and v:FindFirstChild("Complete") and v.Complete.Visible == true then 
+                           local args = {
+                      [1] = "CompleteQuest",
+                      [2] = {
+                          ["MissionName"] = v.Name
+                      }
+                  }
+                  
+                  game:GetService("Players").LocalPlayer:WaitForChild("Input"):FireServer(unpack(args))
+                        end 
+                        end 
+
+                 end)
+                 end 
+                 end)
+
+AutoSnipeToggle:OnChanged(function()
+    while Options.AutoSnipe.Value == true do  
+        task.wait(.5)
+         pcall(function()
+            local childAddedConnection
+            local path = game.Players.LocalPlayer.PlayerGui.HUD.TeamEditor.List.Unitlist.ScrollingFrame
+
+local function onChildAdded(child)
+    if child:IsA("ImageButton") and child:FindFirstChild("UnitName").Text ==  getgenv().WantedUnit then
+        Fluent:Notify({
+            Title = "Auto Snipe Notify",
+            Content = "Congrats!",
+            SubContent = "You just rolled " .. getgenv().WantedUnit, -- Optional
+            Duration =  5
+        })
+        Options.AutoSnipe:SetValue(false)
+        Options.Auto10xCurrentBanner:SetValue(false)
+        Options.Auto1xCurrentBanner:SetValue(false)
+        if childAddedConnection or Options.AutoSnipe.Value == false then
+            childAddedConnection:Disconnect()
+        end
+    end
+end
+    childAddedConnection = path.ChildAdded:Connect(onChildAdded)
+         end)
+        end
+    end)
+
+    
+AutoChallengeToggle:OnChanged(function()
+    while Options.ChallengeToggle.Value == true do  
+     wait(0.5)
+    pcall(function()
+local function fireTouchInterest(part1, part2)
+    firetouchinterest(part1, part2, 0)  -- 0 is for touch
+    wait(0.1)  
+    firetouchinterest(part1, part2, 1)  -- 1 is for untouch
+end
+
+     local tp = {"Challenge 1", "Challenge 3", "Challenge 6"}
+
+for i, v in ipairs(tp) do
+    local dummyPart = game.Players.LocalPlayer.Character.HumanoidRootPart
+    local shuttle = workspace.Mechanisms.Shuttles[v].Hologram
+    if shuttle then
+        fireTouchInterest(dummyPart, shuttle)
+        wait(.2)
+        if game:GetService("Players").LocalPlayer.PlayerGui.HUD.WorldSelector2.Visible == true then 
+        local args = {
+    [1] = "ManageShuttle",
+    [2] = {
+        ["WorldType"] = workspace.Mechanisms.Shuttles[v].Screen.Surface.MapName.Text,
+        ["LaunchShuttle"] = true
+    }
+}
+
+game:GetService("Players").LocalPlayer:WaitForChild("Input"):FireServer(unpack(args))
+end
+end 
+
+if  Options.ChallengeToggle.Value == false then 
+    break 
+  end 
+
+end 
+
+end)
+end
+end)
+
+local hasLoad = false
+
+AutoLoadToggle:OnChanged(function()
+    if Options.AutoLoad.Value == true and not hasLoad then  
+        hasLoad = true
+  task.wait(.1)
+queue_on_teleport([[
+loadstring(game:HttpGet("https://raw.githubusercontent.com/YOies/Test/main/AA"))()
+]])
+
+Fluent:Notify({
+    Title = "Auto Load Upon Server Hop!",
+    Content = "Successfully.",
+    SubContent = "Script will load when you rejoin / server hop.", -- Optional
+    Duration = 10 
+})
+
+    end 
+end)
+
+local hasRun = false
+
+WebhookToggle:OnChanged(function()
+    if Options.WebhookStory.Value == true and not hasRun then  
+        hasRun = true
+        task.wait(.1)
+        pcall(function()
+            function SendMessage(url, message)
+                local http = game:GetService("HttpService")
+                local headers = {
+                    ["Content-Type"] = "application/json"
+                }
+                local data = {
+                    ["content"] = message
+                }
+                local body = http:JSONEncode(data)
+                local response = request({
+                    Url = url,
+                    Method = "POST",
+                    Headers = headers,
+                    Body = body
+                })
+            end
+    
+            function SendMessageEMBED(url, embed)
+                local http = game:GetService("HttpService")
+                local headers = {
+                    ["Content-Type"] = "application/json"
+                }
+                local data = {
+                    ["embeds"] = {
+                        {
+                            ["title"] = embed.title,
+                            ["description"] = embed.description,
+                            ["color"] = embed.color,
+                            ["fields"] = embed.fields,
+                            ["footer"] = {
+                                ["text"] = embed.footer.text
+                            }
+                        }
+                    }
+                }
+                local body = http:JSONEncode(data)
+                local response = request({
+                    Url = url,
+                    Method = "POST",
+                    Headers = headers,
+                    Body = body
+                })
+            end
+
+            local playerGui = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+            local victoryScreenNew = playerGui:WaitForChild("VictoryScreenNew")
+            if victoryScreenNew.Enabled == true and Options.WebhookStory.Value == true then 
+                local url = getgenv().WebhookUrlLink
+                local unitsInfo = {}
+                local inventoryItems = {}
+                local victoryItems = {}
+                local totalItems = {}
+
+                -- Fonction pour extraire les données d'un ScrollingFrame
+                local function extractItems(scrollingFrame)
+                    local items = {}
+                    for _, child in ipairs(scrollingFrame:GetChildren()) do
+                        if child:IsA("ImageButton") and child.Name ~= "Template" then
+                            local amountLabel = child:FindFirstChild("Amount")
+                            if amountLabel and amountLabel:IsA("TextLabel") then
+                                items[child.Name] = amountLabel.Text
+                            end
+                        end
+                    end
+                    return items
+                end
+
+                -- Extraire les items de l'inventaire et de l'écran de victoire
+                local player = game.Players.LocalPlayer
+                local inventoryScrollingFrame = player.PlayerGui.Inventory.Inventory.Window.ScrollingFrame
+                local victoryScrollingFrame = player.PlayerGui.VictoryScreenNew["Victory Screen"].ScrollingFrame
+
+                inventoryItems = extractItems(inventoryScrollingFrame)
+                victoryItems = extractItems(victoryScrollingFrame)
+
+                -- Fonction pour extraire le nombre sans le "x" à la fin
+                local function extractAmount(amountStr)
+                    return tonumber(amountStr:match("%d+"))
+                end
+
+                -- Déterminer si c'est une victoire ou une défaite
+                local winOrLoss = player.PlayerGui.VictoryScreenNew["Victory Screen"].WinOrLoss.Text
+                local outcome = winOrLoss  -- Utiliser directement le texte comme outcome
+
+                -- Construire la liste des récompenses
+                local rewardsList = {}
+                for name, amount in pairs(victoryItems) do
+                    local inventoryAmount = inventoryItems[name]
+                    local totalAmount
+                    if inventoryAmount then
+                        totalAmount = extractAmount(amount) + extractAmount(inventoryAmount)
+                        table.insert(rewardsList, outcome .. "  | " .. name .. " | Reward Amount: " .. amount .. " | Inventory: " .. inventoryAmount .. " | Total: " .. totalAmount)
+                    else
+                        totalAmount = extractAmount(amount)
+                        table.insert(rewardsList, outcome .. "  | " .. name .. " | Reward Amount: " .. amount .. " | Inventory: 0 | Total: " .. totalAmount)
+                    end
+                end
+
+                -- Extraire les informations des unités
+                for i = 1, 4 do
+                    local unitFrame = player.PlayerGui:WaitForChild("VictoryScreenNew"):WaitForChild("Victory Screen"):WaitForChild("Gradient"):WaitForChild("Units"):WaitForChild(tostring(i))
+                    if unitFrame then
+                        local unitModel = unitFrame:WaitForChild("ViewportFrame"):WaitForChild("WorldModel"):FindFirstChildWhichIsA("Model")
+                        local unitName = unitModel and unitModel.Name or ": Not Found Unit Display"
+                        unitsInfo[#unitsInfo + 1] = "Unit" .. i .. ": " .. unitName .. " | Level: " .. unitFrame.Level.Text .. " | +EXP: " .. unitFrame.XP.Text
+                    else
+                        unitsInfo[#unitsInfo + 1] = "Unit" .. i .. ": Not Found Unit Display"
+                    end
+                end
+
+                for _, v in pairs(getgenv().WantedNotify) do 
+                    for i, itemwant in pairs(victoryItems) do 
+                        if v == i then 
+                local embed = {
+                    ["title"] = "Anime Impact Item Notify." .. thumbsDownEmoji .. " L-HUB V3 " .. thumbsDownEmoji,
+                    ["description"] = game:GetService("MarketplaceService"):GetProductInfo(6068961298).Name,
+                    ["color"] = 65280,
+                    ["fields"] = {
+                        {
+                            ["name"] = "Rewards - Amount - Total:",
+                            ["value"] = table.concat(rewardsList, "\n"),
+                        },
+                        {
+                            ["name"] = "Units Info:",
+                            ["value"] = table.concat(unitsInfo, "\n")
+                        },
+                        {
+                            ["name"] = "Player Currency:",
+                            ["value"] = "\nTotal Coins: " .. player.PlayerGui.HUD.Menu.Resource.Coins.Coins.Text ..
+                                        "\nTotal Gems: " .. player.PlayerGui.HUD.Menu.Resource.Gem.Gems.Text .. 
+                                        "\nCoins Dropped: " ..  player.PlayerGui.VictoryScreenNew["Victory Screen"].Resource.Coins.Coins.Text ..  
+                                        "\nGems Dropped: " .. player.PlayerGui.VictoryScreenNew["Victory Screen"].Resource.Gem.Gems.Text,
+                        },
+                        {
+                            ["name"] = "Map Info:",
+                            ["value"] = game.Players.LocalPlayer.PlayerGui.VictoryScreenNew["Victory Screen"]["Level Name"].Text .. "\n" .. game.Players.LocalPlayer.PlayerGui.VictoryScreenNew["Victory Screen"].TotalTime.Text
+                        },
+                    },
+                    ["footer"] = {
+                        ["text"] = "DatNguyen on top." .. thumbsDownEmoji .. " L-HUB V3 " .. thumbsDownEmoji,
+                    }
+                }
+
+                SendMessageEMBED(url, embed)
+            elseif v == "Everything" then 
+                 if next(victoryItems) == nil then 
+                    
+                 else
+                local embed = {
+                    ["title"] = "Anime Impact Item Notify." .. thumbsDownEmoji .. " L-HUB V3 " .. thumbsDownEmoji,
+                    ["description"] = game:GetService("MarketplaceService"):GetProductInfo(6068961298).Name,
+                    ["color"] = 65280,
+                    ["fields"] = {
+                        {
+                            ["name"] = "Rewards - Amount - Total:",
+                            ["value"] = table.concat(rewardsList, "\n"),
+                        },
+                        {
+                            ["name"] = "Units Info:",
+                            ["value"] = table.concat(unitsInfo, "\n")
+                        },
+                        {
+                            ["name"] = "Player Currency:",
+                            ["value"] = "\nTotal Coins: " .. player.PlayerGui.HUD.Menu.Resource.Coins.Coins.Text ..
+                                        "\nTotal Gems: " .. player.PlayerGui.HUD.Menu.Resource.Gem.Gems.Text .. 
+                                        "\nCoins Dropped: " ..  player.PlayerGui.VictoryScreenNew["Victory Screen"].Resource.Coins.Coins.Text ..  
+                                        "\nGems Dropped: " .. player.PlayerGui.VictoryScreenNew["Victory Screen"].Resource.Gem.Gems.Text,
+                        },
+                        {
+                            ["name"] = "Map Info:",
+                            ["value"] = game.Players.LocalPlayer.PlayerGui.VictoryScreenNew["Victory Screen"]["Level Name"].Text .. "\n" .. game.Players.LocalPlayer.PlayerGui.VictoryScreenNew["Victory Screen"].TotalTime.Text
+                        },
+                    },
+                    ["footer"] = {
+                        ["text"] = "DatNguyen on top." .. thumbsDownEmoji .. " L-HUB V3 " .. thumbsDownEmoji,
+                    }
+                }
+
+                SendMessageEMBED(url, embed)
+            end 
+        end 
+    end
+    end 
+end 
+
+        end)
+    end
+end)
+
+
+
+
+
+AutoJoinToggle:OnChanged(function()
+    while Options.AutoJoin.Value == true do  
+     wait(0.5)
+    pcall(function()
+local min = 1
+local max = 8
+local randomNumber = math.random(min, max)
+
+local part = workspace.Mechanisms.Shuttles[tostring(randomNumber)].PlayShuttle.Hologram
+local dummyPart = game.Players.LocalPlayer.Character.HumanoidRootPart
+
+
+local function fireTouchInterest(part1, part2)
+    firetouchinterest(part1, part2, 0)  -- 0 is for touch
+    wait(0.1)  
+    firetouchinterest(part1, part2, 1)  -- 1 is for untouch
+end
+
+if game:GetService("Players").LocalPlayer.PlayerGui.HUD.WorldSelector.Visible == false then 
+fireTouchInterest(dummyPart, part)
+end
+ 
+ if Options.FriendOnly.Value == true then 
+local args = {
+    [1] = "ManageShuttle",
+    [2] = {
+        ["ToggleFriends"] = true
+    }
+}
+
+game:GetService("Players").LocalPlayer:WaitForChild("Input"):FireServer(unpack(args))
+wait(5)
+elseif Options.FriendOnly.Value == false then
+end 
+
+if game:GetService("Players").LocalPlayer.PlayerGui.HUD.WorldSelector.Visible == true then 
+local args = {
+    [1] = "ManageShuttle",
+    [2] = {
+        ["LaunchShuttle"] = false,
+        ["WorldType"] = getgenv().WorldName,
+        ["Level"] = getgenv().LevelName
+    }
+}
+
+game:GetService("Players").LocalPlayer:WaitForChild("Input"):FireServer(unpack(args))
+end
+
+if getgenv().StoryDifficultys == "Hard" then 
+local args = {
+    [1] = "ManageShuttle",
+    [2] = {
+        ["ToggleHardMode"] = true
+    }
+}
+
+game:GetService("Players").LocalPlayer:WaitForChild("Input"):FireServer(unpack(args))
+else 
+    local args = {
+        [1] = "ManageShuttle",
+        [2] = {
+            ["ToggleHardMode"] = false
+        }
+    }
+    
+    game:GetService("Players").LocalPlayer:WaitForChild("Input"):FireServer(unpack(args))
+end 
+end)
+
+wait(.5)
+if game:GetService("Players").LocalPlayer.PlayerGui.HUD.WorldSelector.Visible == true then 
+    local args = {
+        [1] = "ManageShuttle",
+        [2] = {
+            ["LaunchShuttle"] = true,
+            ["WorldType"] = getgenv().WorldName,
+            ["Level"] = getgenv().LevelName
+        }
+    }
+    
+    game:GetService("Players").LocalPlayer:WaitForChild("Input"):FireServer(unpack(args))
+    end
+
+if  Options.AutoJoin.Value == false then 
+    break 
+  end 
+end 
+end)
+
+
+Tabs.Miscs:AddButton({
+    Title = "Redeem All Codes",
+    Description = "Redeem All Current Codes In-Game",
+    Callback = function()
+        local codes = {
+            "30KLIKEZ!!",
+            "ROBLOXCOMEBACK",
+            "3MVISITS!!",
+            "2MVISITS!!",
+            "20KLIKEZ!!",
+            "2MANYSHUTDOWNS!!"
+        }
+        
+         for _,v in pairs(codes) do 
+            local args = {
+                [1] = v
+            }
+            
+            game:GetService("ReplicatedStorage"):WaitForChild("Requests"):WaitForChild("RedeemCode"):FireServer(unpack(args))
+            
+         end 
+            
+    end
+})
+
+AutoDoActionToggle:OnChanged(function()
+    while Options.AutoDoAction.Value == true do  
+ task.wait(.1)
+        pcall(function()
+          if game.Players.LocalPlayer.PlayerGui:FindFirstChild("VictoryScreenNew") then 
+            local Mobile = game.Players.LocalPlayer.PlayerGui:FindFirstChild("TouchGui")
+                     if Mobile then 
+local Signals = {"Activated", "MouseButton1Down", "MouseButton2Down", "MouseButton1Click", "MouseButton2Click"}
+
+for _,v in pairs(game.Players.LocalPlayer.PlayerGui.VictoryScreenNew.DecisionFrame.Buttons:GetChildren()) do
+    if v:IsA("ImageButton") and v.Name == getgenv().ActionAfterFinishStory then
+        for i,Signal in pairs(Signals) do
+            firesignal(v[Signal])
+        end
+    end
+end
+else
+wait(1)
+local imageButton = game.Players.LocalPlayer.PlayerGui.VictoryScreenNew.DecisionFrame.Buttons[getgenv().ActionAfterFinishStory]
+imageButton.Size = UDim2.new(999999999, 999999999, 999999999, 999999999)
+imageButton.BackgroundTransparency  = 0
+wait(1)
+     mouse1click()
+end 
+end 
+        end)
+        if  Options.AutoDoAction.Value == false then 
+            break 
+          end 
+        end 
+end)
+
+AutoLeaveToggle:OnChanged(function()
+    while Options.AutoLeave.Value == true do  
+ task.wait(.1)
+        pcall(function()
+
+local waveNumText = game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("BattleHUD").ELFrame.WaveNum.Text
+local waveNum = tonumber(string.match(waveNumText, "%d+"))
+         if game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("BattleHUD").ELFrame.WaveNum.Text == "WAVE:" .. tostring(getgenv().NumberLeave) or waveNum > tonumber(getgenv().NumberLeave)  then 
+            local args = {
+                [1] = "quitinfinite"
+            }
+            
+            game:GetService("Players").LocalPlayer:WaitForChild("BattleInput"):FireServer(unpack(args)) 
+         end 
+        end)
+        if  Options.AutoLeave.Value == false then 
+            break 
+          end 
+        end 
+end)
+
+Summon1Toggle:OnChanged(function()
+    while Options.Auto1xCurrentBanner.Value == true do  
+    task.wait(.1)
+    pcall(function()
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame  = CFrame.new(1568.16028, 128.999954, 29.7386379, 0.197063059, -6.61186093e-08, -0.980390787, -3.66346384e-08, 1, -7.48048024e-08, 0.980390787, 5.06575262e-08, 0.197063059)
+    local args = {
+        [1] = "Summon",
+        [2] = {
+            ["Banner"] = "Regular",
+            ["Amount"] = 1
+        }
+    }
+    
+    game:GetService("Players").LocalPlayer:WaitForChild("Input"):FireServer(unpack(args))
+end)
+     if  Options.Auto1xCurrentBanner.Value == false then 
+            break 
+          end 
+        end 
+end)
+
+Summon10Toggle:OnChanged(function()
+    while Options.Auto10xCurrentBanner.Value == true do  
+    task.wait(.1)
+    pcall(function()
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame  = CFrame.new(1568.16028, 128.999954, 29.7386379, 0.197063059, -6.61186093e-08, -0.980390787, -3.66346384e-08, 1, -7.48048024e-08, 0.980390787, 5.06575262e-08, 0.197063059)
+    local args = {
+        [1] = "Summon",
+        [2] = {
+            ["Banner"] = "Regular",
+            ["Amount"] = 10
+        }
+    }
+    
+    game:GetService("Players").LocalPlayer:WaitForChild("Input"):FireServer(unpack(args))
+end)
+     if  Options.Auto10xCurrentBanner.Value == false then 
+            break 
+          end 
+        end 
+end)
+
+
+DailyToggle:OnChanged(function()
+    while Options.AutoDaily.Value == true do  
+ task.wait(.1)
+local args = {
+    [1] = {
+        ["stage"] = "claimall"
+    }
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("Requests"):WaitForChild("SignalDailies"):FireServer(unpack(args))
+
+if  Options.AutoDaily.Value == false then 
+    break 
+  end 
+end 
+end)
+
+local hideui = false
+
+HideUIToggle:OnChanged(function()
+        if Options.AutoHideUI.Value == true and not hideui then  
+            hideui = true
+ task.wait(.1)
+    for _, v in pairs(game.CoreGui:GetChildren()) do 
+        if v:IsA("ScreenGui") and v.Name == "ScreenGui" and v:FindFirstChild("Frame") and v.Enabled == true then 
+            game:GetService("VirtualInputManager"):SendKeyEvent(true, "LeftControl", false, game.Players.LocalPlayer)
+        end 
+    end 
+end 
+end)
+
+local autoreconnect = false
+
+AutoReconnectToggle:OnChanged(function()
+    if Options.AutoReconnect.Value == true and not autoreconnect then  
+        autoreconnect = true
+task.wait(.1)
+repeat wait() until game.CoreGui:FindFirstChild('RobloxPromptGui')
+ 
+local lp,po,ts = game:GetService('Players').LocalPlayer,game.CoreGui.RobloxPromptGui.promptOverlay,game:GetService('TeleportService')
+ 
+po.ChildAdded:connect(function(a)
+    if a.Name == 'ErrorPrompt' then
+        repeat
+            ts:Teleport(game.PlaceId)
+            wait(2)
+        until false
+    end
+end)
+    end 
+end)
+
+HideToggle:OnChanged(function()
+     while Options.AutoHide.Value == true do  
+         task.wait(.2)
+local textLabelNames = {
+    "DatNguyenOnTop",
+    "L-HUB comeback!",
+    "NTR_Hentai.com",
+    "Pornhub.com",
+    "furryloverhentai.com"
+}
+
+local function getRandomName()
+    local randomIndex = math.random(1, #textLabelNames)
+    return textLabelNames[randomIndex]
+end
+
+local randomName = getRandomName()
+local playerpathcoregui = game.CoreGui.PlayerList.PlayerListMaster.OffsetFrame.PlayerScrollList.SizeOffsetFrame.ScrollingFrameContainer.ScrollingFrameClippingFrame.ScollingFrame.OffsetUndoFrame
+local function getRandomColor()
+    return Color3.new(math.random(), math.random(), math.random())
+end
+                for i,v in pairs(playerpathcoregui:GetDescendants()) do 
+                    if v:IsA("TextLabel") and v.Name == "PlayerName"  then 
+                        v.TextColor3 = getRandomColor()
+                    end 
+                  end 
+         
+                  for i,v in pairs(playerpathcoregui:GetDescendants()) do 
+                    if v:IsA("TextLabel") and v.Name == "PlayerName"  then 
+                     v.Text = randomName
+                    end 
+                  end         
+                  
+                  if  Options.AutoHide.Value == false then 
+                    break 
+                  end 
+        end         
+end)
+end
+
+SaveManager:SetLibrary(Fluent)
+InterfaceManager:SetLibrary(Fluent)
+SaveManager:IgnoreThemeSettings()
+SaveManager:SetIgnoreIndexes({})
+InterfaceManager:SetFolder("L-HUBAutoSaveFunctions")
+SaveManager:SetFolder("L-HUBAutoSaveFunctions")
+InterfaceManager:BuildInterfaceSection(Tabs.Settings)
+SaveManager:BuildConfigSection(Tabs.Settings)
+Window:SelectTab(1)
+SaveManager:LoadAutoloadConfig()
